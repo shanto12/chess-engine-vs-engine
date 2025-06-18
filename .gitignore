@@ -1,0 +1,4 @@
+# virtual-envs & misc
+venv/
+__pycache__/
+*.pgn
