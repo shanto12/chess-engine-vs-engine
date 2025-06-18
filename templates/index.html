@@ -6,24 +6,28 @@
 
   <!-- Chessboard graphics -->
   <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/www/css/chessboard-1.0.0.min.css">
+        href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
   <style>
     body   { font-family: system-ui, sans-serif; text-align:center; }
-    #board { width:480px; margin:20px auto; }
+    #board { width: 480px; margin: 20px auto; }
   </style>
 </head>
 <body>
   <h2>Engine mirror-match (≈0.3 s / move)</h2>
   <div id="board"></div>
 
+  <!-- JS libraries -->
   <script src="https://cdn.jsdelivr.net/npm/chess.js@1.0.0/chess.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/www/js/chessboard-1.0.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
   <script>
     const board = Chessboard('board', {
-      position:'start', animate:true, animationDuration:250
+      position: 'start',
+      animate:  true,
+      animationDuration: 250
     });
+
     const socket = io();
     socket.on('move', data => board.position(data.fen, true));
     socket.on('game_over', d => alert('Game over – result: ' + d.result));
