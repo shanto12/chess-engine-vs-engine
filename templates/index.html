@@ -2,35 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Stockfish 17.1 v Stockfish 17.1</title>
+  <title>Stockfish 17.1 v Stockfish 17.1</title>
 
-  <!-- Chessboard graphics -->
+  <!-- CSS for the board -->
   <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css"/>
+
   <style>
     body   { font-family: system-ui, sans-serif; text-align:center; }
     #board { width: 480px; margin: 20px auto; }
   </style>
 </head>
 <body>
-  <h2>Engine mirror-match (≈0.3 s / move)</h2>
+  <h2>Engine mirror‑match (≈0.3 s / move)</h2>
   <div id="board"></div>
 
   <!-- JS libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/chess.js@1.0.0/chess.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.0.0/chess.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
   <script>
-    const board = Chessboard('board', {
-      position: 'start',
-      animate:  true,
-      animationDuration: 250
-    });
+    document.addEventListener('DOMContentLoaded', () => {
+      /*  Remote piece images so nothing needs to be stored locally          */
+      const PIECES =
+        'https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/img/chesspieces/wikipedia/{piece}.png';
 
-    const socket = io();
-    socket.on('move', data => board.position(data.fen, true));
-    socket.on('game_over', d => alert('Game over – result: ' + d.result));
+      const board = Chessboard('board', {
+        position:    'start',
+        pieceTheme:  PIECES,
+        animate:     true,
+        animationDuration: 250
+      });
+
+      const socket = io();
+      socket.on('move',   d => board.position(d.fen, true));
+      socket.on('game_over', d => alert('Game over – result: ' + d.result));
+    });
   </script>
 </body>
 </html>
